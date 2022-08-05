@@ -1,34 +1,50 @@
+# Third-Party Imports
 import pygame
 
+# Local Imports
 from settings import Settings
-
+from bird import BlueBird
 
 # Initialize pygame and settings
-pygame.init()
-settings = Settings()
+pygame.init() # Pygame
+settings = Settings() # Settings 
 
+# Make Clocks, Screen, Set Basic Properties
+CLOCK = pygame.time.Clock() # Clock
+SCREEN = pygame.display.set_mode((settings.WIDTH,settings.HEIGHT)) # Screen
+pygame.display.set_caption(settings.TITLE) # Window Title
 
-screen = pygame.display.set_mode((settings.WIDTH,settings.HEIGHT))
-pygame.display.set_caption(settings.TITLE)
+# For side scrolling
+X_POS_BG = 0
 
-run = True
+# Initialize the bird class
+blue_bird = BlueBird()
 
-bg_image = pygame.image.load(settings.BG_IMAGE_DIR)
-bg_image_2 = bg_image
+# Main Loop Flag
+RUN = True
+while RUN:
+    CLOCK.tick(settings.FPS)
 
-x_pos_bg = 0
+    blue_bird.rect.centery += settings.FALLING_SPEED
 
-while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit()
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                blue_bird.jumping = True
 
-    screen.blit(bg_image, (x_pos_bg,0))
-    screen.blit(bg_image_2, (x_pos_bg+settings.WIDTH, 0)) 
 
-    x_pos_bg -= settings.SCROLLING_VELOCITY
-    if x_pos_bg == 0-settings.WIDTH:
-        x_pos_bg = 0
+    blue_bird.jump()
+
+    SCREEN.blit(settings.BG_IMAGE, (X_POS_BG,0))
+    SCREEN.blit(settings.BG_IMAGE, (X_POS_BG+settings.WIDTH, 0)) 
+    
+    blue_bird.blitme(SCREEN)
+
+    X_POS_BG -= settings.SCROLLING_VELOCITY
+    if X_POS_BG == 0-settings.WIDTH:
+        X_POS_BG = 0
 
     pygame.display.update()
 
