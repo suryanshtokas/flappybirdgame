@@ -13,6 +13,8 @@ class Pipe(pygame.sprite.Sprite):
 
         self.rect.center = (x,y)
 
+        self.scored = True
+
     def update(self):
         self.rect.right -= 5
         if self.rect.right < 0:

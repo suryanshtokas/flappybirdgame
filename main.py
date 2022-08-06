@@ -7,6 +7,7 @@ from background import Background
 from bird import BlueBird
 from floor import Floor
 from pipes import Pipe
+from score import Score
 
 
 # Initialize pygame and settings
@@ -22,9 +23,11 @@ pygame.display.set_caption(settings.TITLE) # Window Title
 background = Background()
 blue_bird = BlueBird()
 floor = Floor()
+score = Score()
+
+FONT = pygame.font.SysFont("ubuntumono", 16)
 
 ITR = 0
-
 
 pipes = pygame.sprite.Group()
 
@@ -39,6 +42,7 @@ while RUN:
     background.blitme(SCREEN)
     pipes.draw(SCREEN)
     floor.blitme(SCREEN)
+    score.blitme(SCREEN)
 
     if settings.FALLING_SPEED == 2.4:
         background.scroll()
@@ -66,7 +70,13 @@ while RUN:
 
     if settings.FALLING_SPEED == 2.4:
         pipes.update()
-        
+
+
+    # for scoring
+    for pipe in pipes:
+        if blue_bird.rect.left > pipe.rect.right and pipe.scored:
+            pipe.scored = False
+            score.score += 1
 
     ITR += 1
     if ITR == 60:

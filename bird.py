@@ -29,6 +29,8 @@ class BlueBird:
 
         self.is_dead = False
 
+        self.score = 0
+
     def jump(self):
         if self.jumping:
             self.rect.centery -= self.jump_speed
@@ -49,7 +51,9 @@ class BlueBird:
         if not self.is_dead:
             for i in pipes:
                 if pygame.Rect.colliderect(i.rect, self.rect):
+                    self.is_dead = True
                     return 7.2
+
         return 0
 
     def bump_ceiling(self):
