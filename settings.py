@@ -3,7 +3,7 @@ import pygame
 class Settings:
     def __init__(self):
         self.WIDTH = 900
-        self.HEIGHT = 504
+        self.HEIGHT = 504 + 108 # (110 for floor)
 
         self.TITLE = "Flappy Bird"
 
@@ -11,9 +11,9 @@ class Settings:
 
         self.SCROLLING_VELOCITY = 6
 
-        self.JUMP_HEIGHT = 15
+        self.JUMP_HEIGHT = 25
 
-        self.FALLING_SPEED = 1.35
+        self.FALLING_SPEED = 2.4
 
         self.FPS = 60
 
