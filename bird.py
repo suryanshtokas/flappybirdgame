@@ -43,17 +43,15 @@ class BlueBird:
         else:
             if self.rect.bottom >= self.settings.HEIGHT:
                 quit()
-    
-    def die(self, bg, floor, settings):
-        self.is_dead = True
-    
-        # Stop everything from moving
-        bg.stop_scroll = True
-        floor.stop_scroll = True
 
-        # Fall down fast   
-        settings.FALLING_SPEED *= 3
-    
+
+    def pipe_check(self, pipes):
+        if not self.is_dead:
+            for i in pipes:
+                if pygame.Rect.colliderect(i.rect, self.rect):
+                    return 7.2
+        return 0
+
     def bump_ceiling(self):
         if self.rect.top <= 0:
             self.rect.top = 0

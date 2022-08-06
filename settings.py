@@ -17,6 +17,8 @@ class Settings:
 
         self.FPS = 60
 
+        self.RUNNING = True
+
         self.BLUE_BIRD_DIRS = [
                     r"imgs/bluebird-downflap.png",
                     r"imgs/bluebird-midflap.png",
