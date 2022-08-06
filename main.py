@@ -25,8 +25,6 @@ blue_bird = BlueBird()
 floor = Floor()
 score = Score()
 
-FONT = pygame.font.SysFont("ubuntumono", 16)
-
 ITR = 0
 
 pipes = pygame.sprite.Group()
@@ -60,17 +58,17 @@ while RUN:
             pipes.add(Pipe(None, 1000,settings.HEIGHT-110))
             pipes.add(Pipe("face_down",1000, 0))
 
-    blue_bird.touched_floor(floor)
+    blue_bird.touched_floor(floor, score)
     blue_bird.bump_ceiling()
 
     blue_bird.jump()
-    settings.FALLING_SPEED += blue_bird.pipe_check(pipes)
+    settings.FALLING_SPEED += blue_bird.pipe_check(pipes, score)
 
     blue_bird.blitme(SCREEN, ITR)
 
     if settings.FALLING_SPEED == 2.4:
         pipes.update()
-
+ 
 
     # for scoring
     for pipe in pipes:

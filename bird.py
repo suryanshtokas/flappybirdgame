@@ -39,21 +39,27 @@ class BlueBird:
                 self.jumping = False
                 self.jump_speed = self.settings.JUMP_HEIGHT - self.jump_offset
 
-    def touched_floor(self, floor):
+    def save_score(self, score):
+        with open("score.txt", "w+") as file:
+            file.write("Score: " + str(score//2))
+
+    def touched_floor(self, floor, score):
         if (pygame.Rect.colliderect(self.rect, floor.rect) or pygame.Rect.colliderect(self.rect, floor.rect_2)) and not self.is_dead:
+            self.save_score(score.score)
             quit()
         else:
             if self.rect.bottom >= self.settings.HEIGHT:
+                self.save_score(score.score)
                 quit()
 
 
-    def pipe_check(self, pipes):
+    def pipe_check(self, pipes, score):
         if not self.is_dead:
             for i in pipes:
                 if pygame.Rect.colliderect(i.rect, self.rect):
                     self.is_dead = True
+                    self.save_score(score.score)
                     return 7.2
-
         return 0
 
     def bump_ceiling(self):
