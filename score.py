@@ -7,7 +7,7 @@ class Score:
     def __init__(self):
         self.settings = Settings()
 
-        self.font = pygame.font.SysFont("freesans", 32)
+        self.font = pygame.font.SysFont("freesans", 64)
 
         self.score = 0
 
