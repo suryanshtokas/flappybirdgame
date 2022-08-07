@@ -1,6 +1,9 @@
 # Third-Party Imports
 import pygame
 
+# Python Standard Libraries
+import random
+
 # Local Imports
 from settings import Settings
 from background import Background
@@ -26,6 +29,7 @@ floor = Floor()
 score = Score()
 
 ITR = 0
+TEMP = 0
 
 pipes = pygame.sprite.Group()
 
@@ -55,8 +59,10 @@ while RUN:
             if event.key == pygame.K_SPACE:
                 blue_bird.jumping = True
         elif event.type == timer:
-            pipes.add(Pipe(None, 1000,settings.HEIGHT-110))
-            pipes.add(Pipe("face_down",1000, 0))
+            TEMP = random.randint(0,90)
+
+            pipes.add(Pipe(None, 1000,settings.HEIGHT-110-TEMP))
+            pipes.add(Pipe("face_down",1000, -TEMP))
 
     blue_bird.touched_floor(floor, score)
     blue_bird.bump_ceiling()
