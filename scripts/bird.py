@@ -1,11 +1,11 @@
 import pygame
 
-import settings
+import scripts.settings
 
 
 class BlueBird:
     def __init__(self):
-        self.settings = settings.Settings()
+        self.settings = scripts.settings.Settings()
         self.load_images()
 
         self.rect = self.mid_flap_rect

@@ -5,12 +5,12 @@ import pygame
 import random
 
 # Local Imports
-from settings import Settings
-from background import Background
-from bird import BlueBird
-from floor import Floor
-from pipes import Pipe
-from score import Score
+from scripts.settings import Settings
+from scripts.background import Background
+from scripts.bird import BlueBird
+from scripts.floor import Floor
+from scripts.pipes import Pipe
+from scripts.score import Score
 
 
 # Initialize pygame and settings

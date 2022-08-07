@@ -1,6 +1,6 @@
 import pygame
 
-from settings import Settings
+from scripts.settings import Settings
 
 class Floor:
     def __init__(self):
