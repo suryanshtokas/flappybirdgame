@@ -1,9 +1,6 @@
 # Third-Party Imports
 import pygame
 
-# Python Standard Libraries
-import random
-
 # Local Imports
 from scripts.settings import Settings
 from scripts.background import Background
@@ -11,6 +8,7 @@ from scripts.bird import BlueBird
 from scripts.floor import Floor
 from scripts.pipes import Pipe
 from scripts.score import Score
+import scripts.functions as game_functions
 
 
 # Initialize pygame and settings
@@ -23,66 +21,38 @@ SCREEN = pygame.display.set_mode((settings.WIDTH,settings.HEIGHT)) # Screen
 pygame.display.set_caption(settings.TITLE) # Window Title
 
 # Initialize the bird, floor, background class
-background = Background()
-blue_bird = BlueBird()
-floor = Floor()
-score = Score()
+background = Background() # Background
+blue_bird = BlueBird() # Bird
+floor = Floor() # Floor
+score = Score() # For Scoring
+pipes = pygame.sprite.Group() # For all pipes
 
-ITR = 0
-TEMP = 0
-
-pipes = pygame.sprite.Group()
-
-timer = pygame.USEREVENT + 1
+# Timer for generation of pipes
+timer = pygame.USEREVENT + 1 
 pygame.time.set_timer(timer, 1200)
 
 # Main Loop Flag
 RUN = True
 while RUN:
+    # Run game at chosen FPS
     CLOCK.tick(settings.FPS)
 
-    background.blitme(SCREEN)
-    pipes.draw(SCREEN)
-    floor.blitme(SCREEN)
-    score.blitme(SCREEN)
+    # Storing all events in events variable
+    events = pygame.event.get()
 
-    if settings.FALLING_SPEED == 2.4:
-        background.scroll()
-        floor.animate() 
+    # Show, Animate and Manage User Inputs
+    game_functions.show(background, pipes, floor, score, blue_bird, SCREEN, settings)
+    game_functions.animate(settings, background, floor)
+    game_functions.manage_events(events, blue_bird, Pipe, pipes, timer, settings)
 
-    blue_bird.rect.centery += settings.FALLING_SPEED
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            quit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                blue_bird.jumping = True
-        elif event.type == timer:
-            TEMP = random.randint(0,90)
 
-            pipes.add(Pipe(None, 1000,settings.HEIGHT-110-TEMP))
-            pipes.add(Pipe("face_down",1000, -TEMP))
+    # If the game is not paused, then update everything          
+    if not settings.PAUSE:
+        game_functions.update(blue_bird, settings, pipes, floor, score)
+    # If the game is paused, then show the pause screen
+    else:        
+        game_functions.pauseScreen(settings, SCREEN)
 
-    blue_bird.touched_floor(floor, score)
-    blue_bird.bump_ceiling()
 
-    blue_bird.jump()
-    settings.FALLING_SPEED += blue_bird.pipe_check(pipes, score)
-
-    blue_bird.blitme(SCREEN, ITR)
-
-    if settings.FALLING_SPEED == 2.4:
-        pipes.update()
- 
-
-    # for scoring
-    for pipe in pipes:
-        if blue_bird.rect.left > pipe.rect.right and pipe.scored:
-            pipe.scored = False
-            score.score += 1
-
-    ITR += 1
-    if ITR == 60:
-        ITR = 0
+    # Updating the display
     pygame.display.update()

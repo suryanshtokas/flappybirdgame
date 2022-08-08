@@ -17,7 +17,11 @@ class Settings:
 
         self.FPS = 60
 
-        self.RUNNING = True
+        self.PAUSE = False
+
+        self.ITR = 0
+
+        self.TRANSPARENCY_OVERLAY_COLOR = (211,211,211)
 
         self.BLUE_BIRD_DIRS = [
                     r"imgs/bluebird-downflap.png",
