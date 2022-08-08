@@ -32,7 +32,7 @@ class BlueBird:
         self.score = 0
 
     def jump(self):
-        if self.jumping:
+        if self.jumping and not self.is_dead:
             self.rect.centery -= self.jump_speed
             self.jump_speed -= self.settings.FALLING_SPEED
             if self.jump_speed <= 0:
@@ -40,7 +40,7 @@ class BlueBird:
                 self.jump_speed = self.settings.JUMP_HEIGHT - self.jump_offset
 
     def save_score(self, score):
-        with open("score.txt", "w+") as file:
+        with open("user_data/score.txt", "w+") as file:
             file.write("Score: " + str(score//2))
 
     def touched_floor(self, floor, score):
