@@ -11,6 +11,18 @@ def pauseScreen(settings, screen):
     pause_screen_height = 225
     pygame.draw.rect(screen, (211,211,211), pygame.Rect(settings.WIDTH//2-pause_screen_width//2, settings.HEIGHT//2-pause_screen_height//2,
                                                             pause_screen_width,pause_screen_height))
+    pause_font = pygame.font.SysFont("freesans", 32)
+    pause_text = pause_font.render("PAUSED!", True, (0,0,0))
+    pause_rect = pause_text.get_rect()
+    pause_rect.center = (settings.WIDTH//2, settings.HEIGHT//2)
+
+    pause_info_font = pygame.font.SysFont("freesans", 16)
+    pause_info = pause_info_font.render("Press any key or do a mouse click to continue", True, (0,0,0))
+    pause_info_rect = pause_info.get_rect()
+    pause_info_rect.center = (settings.WIDTH//2, (settings.HEIGHT//2) + 50)
+
+    screen.blit(pause_text, pause_rect)
+    screen.blit(pause_info, pause_info_rect)
 
 def show(background, pipes, floor, score, blue_bird, screen, settings):
     background.blitme(screen)
@@ -31,6 +43,8 @@ def manage_events(events, blue_bird, pipe, pipes, timer, settings):
         if event.type == pygame.QUIT:
             quit()
         elif event.type == pygame.KEYDOWN:
+            if event.key != pygame.K_ESCAPE:
+                settings.PAUSE = False # To get of the pause screen by pressing any key
             if event.key == pygame.K_SPACE:
                 blue_bird.jumping = True
             elif event.key == pygame.K_ESCAPE:
@@ -38,6 +52,8 @@ def manage_events(events, blue_bird, pipe, pipes, timer, settings):
                     settings.PAUSE = False
                 else:
                     settings.PAUSE = True
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            settings.PAUSE = False
         elif event.type == timer and not settings.PAUSE:
             temp = random.randint(0,90)
             pipes.add(pipe(None, 1000,settings.HEIGHT-110-temp))

@@ -1,4 +1,4 @@
-# Third-Party Imports
+ # Third-Party Imports
 import pygame
 
 # Local Imports
