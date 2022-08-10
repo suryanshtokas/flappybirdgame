@@ -1,2 +1,2 @@
-Score: 8
-Coins: 3
+Score: 7
+Coins: 7
