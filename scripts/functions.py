@@ -24,20 +24,20 @@ def pauseScreen(settings, screen):
     screen.blit(pause_text, pause_rect)
     screen.blit(pause_info, pause_info_rect)
 
-def show(background, pipes, floor, score, blue_bird, screen, settings):
+def show(background, pipes, floor, score, blue_bird, coins, screen, settings):
     background.blitme(screen)
     pipes.draw(screen)
     floor.blitme(screen)
-    score.blitme(screen)
+    score.blitme(blue_bird.coin_score, screen)
     blue_bird.blitme(screen ,settings.ITR)
-    
+    coins.draw(screen)
 
 def animate(settings, bg, floor):
     if settings.FALLING_SPEED == 2.4 and not settings.PAUSE:
         bg.scroll()
         floor.animate()
 
-def manage_events(events, blue_bird, pipe, pipes, timer, settings):
+def manage_events(events, blue_bird, pipe, pipes, timer, coins, coin, settings):
 
     for event in events:
         if event.type == pygame.QUIT:
@@ -59,19 +59,22 @@ def manage_events(events, blue_bird, pipe, pipes, timer, settings):
             pipes.add(pipe(None, 1000,settings.HEIGHT-110-temp))
             pipes.add(pipe("face_down",1000, -temp))
 
+            coins.add(coin(900,180))
 
-def update(blue_bird, settings, pipes, floor, score):
+
+def update(blue_bird, settings, pipes, floor, coins, score):
     blue_bird.rect.centery += settings.FALLING_SPEED
 
     blue_bird.touched_floor(floor, score)
     blue_bird.bump_ceiling()
 
     blue_bird.jump()
-    settings.FALLING_SPEED += blue_bird.pipe_check(pipes, score)
+    settings.FALLING_SPEED += blue_bird.pipe_check(pipes, coins, score)
 
     
     if settings.FALLING_SPEED == 2.4:
         pipes.update()
+        coins.update()
 
 
     settings.ITR += 1

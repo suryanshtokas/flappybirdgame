@@ -8,6 +8,7 @@ from scripts.bird import BlueBird
 from scripts.floor import Floor
 from scripts.pipes import Pipe
 from scripts.score import Score
+from scripts.coin import Coin
 import scripts.functions as game_functions
 
 
@@ -26,6 +27,7 @@ blue_bird = BlueBird() # Bird
 floor = Floor() # Floor
 score = Score() # For Scoring
 pipes = pygame.sprite.Group() # For all pipes
+coins = pygame.sprite.Group() # For all coins
 
 # Timer for generation of pipes
 timer = pygame.USEREVENT + 1 
@@ -41,14 +43,14 @@ while RUN:
     events = pygame.event.get()
 
     # Show, Animate and Manage User Inputs
-    game_functions.show(background, pipes, floor, score, blue_bird, SCREEN, settings)
+    game_functions.show(background, pipes, floor, score, blue_bird, coins, SCREEN, settings)
     game_functions.animate(settings, background, floor)
-    game_functions.manage_events(events, blue_bird, Pipe, pipes, timer, settings)
+    game_functions.manage_events(events, blue_bird, Pipe, pipes, timer, coins, Coin, settings)
 
 
     # If the game is not paused, then update everything          
     if not settings.PAUSE:
-        game_functions.update(blue_bird, settings, pipes, floor, score)
+        game_functions.update(blue_bird, settings, pipes, floor, coins, score)
     # If the game is paused, then show the pause screen
     else:        
         game_functions.pauseScreen(settings, SCREEN)

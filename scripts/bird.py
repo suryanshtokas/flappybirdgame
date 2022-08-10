@@ -31,6 +31,8 @@ class BlueBird:
 
         self.score = 0
 
+        self.coin_score = 0
+
     def jump(self):
         if self.jumping and not self.is_dead:
             self.rect.centery -= self.jump_speed
@@ -41,7 +43,7 @@ class BlueBird:
 
     def save_score(self, score):
         with open("user_data/score.txt", "w+") as file:
-            file.write("Score: " + str(score//2))
+            file.write("Score: " + str(score//2) + "\nCoins: " + str(self.coin_score))
 
     def touched_floor(self, floor, score):
         if (pygame.Rect.colliderect(self.rect, floor.rect) or pygame.Rect.colliderect(self.rect, floor.rect_2)) and not self.is_dead:
@@ -53,13 +55,17 @@ class BlueBird:
                 quit()
 
 
-    def pipe_check(self, pipes, score):
+    def pipe_check(self, pipes, coins, score):
         if not self.is_dead:
             for i in pipes:
                 if pygame.Rect.colliderect(i.rect, self.rect):
                     self.is_dead = True
                     self.save_score(score.score)
                     return 7.2
+            for i in coins:
+                if pygame.Rect.colliderect(i.rect, self.rect):
+                    i.kill()
+                    self.coin_score += 1
         return 0
 
     def bump_ceiling(self):

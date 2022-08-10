@@ -1,1 +1,2 @@
-Score: 2
+Score: 8
+Coins: 8
