@@ -1,2 +1,2 @@
 Score: 8
-Coins: 8
+Coins: 3

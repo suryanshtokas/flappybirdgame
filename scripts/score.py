@@ -19,12 +19,12 @@ class Score:
         self.coin_image = pygame.image.load('imgs/coin.png').convert_alpha()
         self.coin_rect = self.coin_image.get_rect()
 
-        self.coin_rect.bottomright = (self.settings.WIDTH-50, self.settings.HEIGHT-5)
+        self.coin_rect.bottomright = (self.settings.WIDTH-50, self.settings.HEIGHT-15)
         
         self.coin_score_font = pygame.font.SysFont("freesans", 16)
         self.coin_score_text = self.coin_score_font.render(str(0), True, (0,0,0))
         self.coin_score_rect = self.coin_score_text.get_rect()
-        self.coin_score_rect.bottomleft = (self.settings.WIDTH-45, self.settings.HEIGHT-10)
+        self.coin_score_rect.bottomleft = (self.settings.WIDTH-45, self.settings.HEIGHT-22)
 
 
     def blitme(self, coins, screen):

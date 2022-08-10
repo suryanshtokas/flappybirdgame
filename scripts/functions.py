@@ -59,7 +59,7 @@ def manage_events(events, blue_bird, pipe, pipes, timer, coins, coin, settings):
             pipes.add(pipe(None, 1000,settings.HEIGHT-110-temp))
             pipes.add(pipe("face_down",1000, -temp))
 
-            coins.add(coin(900,180))
+            coins.add(coin(900, random.randint(90,400)))
 
 
 def update(blue_bird, settings, pipes, floor, coins, score):
